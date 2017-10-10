@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>fe 13</title>
+        <style>
+            .done {
+                color: lightgray;
+                text-decoration: line-through;
+            }
+            .modal-alert {
+                position: fixed;
+                top: 0px;
+                left: 0px;
+                width: 100%;
+                height: 100%;
+                background: black;
+                opacity: 0.5;
+            }
+        </style>
+        <script src="http://cdn.bootcss.com/jquery/3.1.1/jquery.js"></script>
+    </head>
+    <body>
+        <div class="main">
+            <div class="form">
+                <input id="id-input-add" name="name" value="">
+                <br>
+                <button id='id-button-add' type="button" name="button">Add</button>
+            </div>
+            <div class="" id='id-div-todo'>
+
+            </div>
+        </div>
+
+        <div class="modal-alert">
+            <div class="modal-title">
+                弹窗
+            </div>
+            <button id="id-button-modal" type="button" name="button">ok</button>
+        </div>
+
+
+        <script>
+        
+        
+        var todoTemplete = function(todo) {
+            var t = `
+            <div class="todo-cell">
+                <span>${todo}</span>
+                <div class="">
+                    <button class='edit-button' type="button" name="button">edit</button>
+                    <button class='delete-button' type="button" name="button">delete</button>
+                    <button class='complete-button' type="button" name="button">complete</button>
+                </div>
+            </div>
+            `
+            return t
+        }
+
+        $('#id-button-add').on('click', function(event) {
+            var todo = $('#id-input-add').val()
+            $('#id-div-todo').append(todoTemplete(todo))
+        })
+
+        $('#id-button-modal').on('click', function(event) {
+            var modal = $('.modal-alert')
+            console.log('modal', modal)
+            // 关闭弹窗
+            $(modal).empty().removeClass()                    
+        })
+
+        // jQuery 事件委托的方式
+        $('#id-div-todo').on('click', '.delete-button', function(event){
+            console.log('click')
+
+            var button = $(event.target)
+            button.closest('.todo-cell').remove()
+        })
+
+        $('#id-div-todo').on('click', '.complete-button', function(event){
+            console.log('click 完成')
+            var button = $(event.target)
+            var span = button.closest('.todo-cell').find('span')
+            span.toggleClass('done')
+        })
+
+        $('#id-div-todo').on('click', '.edit-button', function(event){
+            console.log('click edit')
+            var button = $(event.target)
+            var span = button.closest('.todo-cell').find('span')
+            var t = span.text()
+            console.log('span.text', t)
+        })
+
+        $('#id-input-add').on('keydown', function(event){
+            console.log('key down', event)
+        })
+
+        
+
+        </script>
+    </body>
+</html>
